@@ -4,16 +4,18 @@ import RollDice from "./RollDice";
 import TotalScore from "./TotalScore";
 import styled from "styled-components";
 import { Button, OutlineButton } from "../styled/Button";
+import Rules from "./Rules";
 
 const GamePlay = () => {
   const [score, setScore] = useState(0);
   const [selectedNumber, setSelectedNumber] = useState();
   const [currentDice, setCurrentDice] = useState(2);
   const [err, setErr] = useState();
+  const [showRules, setShowRules] = useState(false);
 
   const generateRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
-    console.log(Math.floor(Math.random() * (max - min) + min));
+    // console.log(Math.floor(Math.random() * (max - min) + min));
   };
 
   const rollDice = () => {
@@ -35,6 +37,10 @@ const GamePlay = () => {
     setSelectedNumber(undefined);
   };
 
+  const resetScore = () => {
+    setScore(0);
+  };
+
   return (
     <MainContainer>
       <div className="top_section">
@@ -48,9 +54,13 @@ const GamePlay = () => {
       </div>
       <RollDice currentDice={currentDice} rollDice={rollDice} />
       <div className="btns">
-        <OutlineButton>Reset</OutlineButton>
-        <Button>Show Rules</Button>
+        <OutlineButton onClick={resetScore}>Reset</OutlineButton>
+        <Button onClick={() => setShowRules((prev) => !prev)}>
+          {showRules ? " Hide" : "Show"} Rules
+        </Button>
       </div>
+
+      {showRules && <Rules />}
     </MainContainer>
   );
 };
